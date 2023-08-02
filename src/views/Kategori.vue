@@ -1,13 +1,14 @@
 <template>
     <h1>kategori</h1>
+    
     <div class="flex-container">
         <div v-for="kategori in cek" :key="kategori.id" class="card">
+            <img :src="getImgSrc(kategori.img)" alt="Category image">
         <router-link class="container" :to="{ name : 'DetailKategori', params:{id_kategori : kategori.id}}">
             <h4>{{ kategori.namakategori }}</h4>
-            <h4>{{ kategori.id }}</h4>
         </router-link>
     </div>
-    </div>
+    </div>  
   </template>
 <script>
 import { onMounted, reactive } from 'vue';
@@ -18,12 +19,18 @@ export default{
 
         const cek = reactive(kategori["kategori"]);
 
+        const getImgSrc = (imgFileName) => {
+            return '../src/assets/img/' + imgFileName + '';
+        }
+
         onMounted(() => {
             context.emit("id-menu",5)
         });
 
         return{
-            cek
+            cek,
+            getImgSrc
+
         }
     }
 }
@@ -31,6 +38,7 @@ export default{
 <style scoped>
 .flex-container {
     display: flex;
+    flex-wrap: wrap;
 }
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2);
@@ -44,5 +52,9 @@ export default{
 }
 .container {
     padding: 2px 16px;
+}
+img{
+    height: 150px;
+    width: 100%;
 }
 </style>

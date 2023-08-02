@@ -1,11 +1,17 @@
 <template>
+    <div v-if="data == 0">
+   <h1> Barang Sudah Sold Out</h1>
+    </div>
+    <div v-else>
     <div class="flex-container">
         <div v-for="produk in data" :key="produk.id" class="card">
+            <img :src="getImgSrc(produk.img)" alt="Category image">
         <router-link class="container" :to="{ name : 'Detail', params:{id_produk : produk.id}}">
             <h4>{{produk.nama }}</h4>
         </router-link>
     </div>
     </div>
+</div>
   </template>
 <script>
 import { produk } from '../assets/Produk';
@@ -26,10 +32,14 @@ export default {
             
         });
         
+        const getImgSrc = (imgFileName) => {
+            return '../src/assets/img/' + imgFileName + '';
+        }
         
         return{
             detail,
-            data
+            data,
+            getImgSrc
             
 
         }
@@ -40,6 +50,7 @@ export default {
 <style scoped>
 .flex-container {
     display: flex;
+    flex-wrap: wrap;
 }
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2);
@@ -53,5 +64,9 @@ export default {
 }
 .container {
     padding: 2px 16px;
+}
+img{
+    height: 150px;
+    width: 100%;
 }
 </style>
