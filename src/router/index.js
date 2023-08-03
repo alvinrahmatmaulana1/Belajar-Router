@@ -1,16 +1,18 @@
 import { createWebHistory, createRouter } from "vue-router";
 // Import Component2 Kalian
 
-import Home from "@/views/Home.vue"; 
+import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Contact from "@/views/Contact.vue"
 import Produk from "@/views/Produk.vue"
 import Detail from "@/views/Detail.vue"
 import Kategori from "@/views/Kategori.vue"
 import DetailKategori from "@/views/DetailKategori.vue"
-const routes = [ 
+import Login from "@/views/Login.vue"
+import { user } from "../assets/User";
+const routes = [
   {
-    path: "/", 
+    path: "/",
     name: "Home",
     component: Home,
   },
@@ -28,6 +30,14 @@ const routes = [
     path: "/produk",
     name: "Produk",
     component: Produk,
+    beforeEnter: (to, from, next) => {
+      const loggedInUser = true;
+      if (loggedInUser) {
+        next();
+      } else {
+        next("/login")
+      }
+    }
   },
   {
     path: "/detail/:id_produk",
@@ -39,7 +49,7 @@ const routes = [
     path: "/kategori",
     name: "Kategori",
     component: Kategori,
-    
+
   },
   {
     path: "/detailkategori/:id_kategori",
@@ -47,6 +57,14 @@ const routes = [
     component: DetailKategori,
     props: true,
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    props: true
+  },
+
+
 ];
 
 const router = createRouter({
